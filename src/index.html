@@ -1,17 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+	<script type="text/javascript">
+		var cont_pos = 0;
+		var i = 0;
+		var diccionario = ["A", "a", "B", "b", "C", "c", "D", "d", "E", "e" ,"F", "f" ,"G", "g", "H", "h", "I", "i", "J", "j", "K", "k", "L", "l", "M", "m", "N", "n", "O", "o", "P", "p", "Q", "q", "R", "r", "S", "s", "T", "t", "U", "u", "V", "v", "W", "w", "X", "x", "Y", "y", "Z", "z", "1", "!", "2", "@", "3", ".", "4", "5", "%", "6", "&", "7", "/", "8", "9", "0"];
+		function generar(pass){
+			var pass="";
+			for ( var j = 0; j < 12; j++ ){
+				var dicc = diccionario.sort(function() { return Math.random() - 0.5 });
+				var valor = Math.random(dicc.lenght)*(dicc.length-1);
+				var pos = Math.round(valor);
+				pass += dicc[pos];
+			}
+			password.textContent = pass;
+			navigator.clipboard.writeText(password);
+			alert("La contraseña se ha copiado al portapapeles " + password.value);
+			const guardarArchivoDeTexto = (password, nombre) => {
+				const a = document.createElement("a");
+				const archivo = new Blob([password], { type: 'text/plain' });
+				const url = URL.createObjectURL(archivo);
+				a.href = url;
+				a.download = nombre;
+				a.click();
+				URL.revokeObjectURL(url);
+			}
+			const $botonDescargar = document.querySelector("#cortar");
+			descargar($botonDescargar, guardarArchivoDeTexto, password);
+		}
+		function descargar($boton, archivo, pass){
+				archivo(pass.value, "archivo.txt");
+				window.location.reload();
+		}
+	</script>
+	<style>
+		div {
+		  text-align: center;
+		  margin: 20px;
+		}
+		button {
+			background-color: red;
+			border: none;
+			border-radius: 20%;
+			height: 45px;
+
+		}
+		button:hover{
+			background-color: black;
+			color: red;
+			height: 50px;
+		}
+		</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Generador de contraseñas</title>
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
+	<div id="div"><button id="generar" onclick="generar(password)">Generar contraseña y fichero</button></div>
+	<div id="div" hidden><textarea id="password" rows="5" cols="20"></textarea></div>
 </body>
-
 </html>
